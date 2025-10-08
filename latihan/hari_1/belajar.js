@@ -54,7 +54,7 @@ console.log("Kalimat dalam huruf besar: " + kalimat.toUpperCase());
 console.log("Kalimat dalam huruf kecil: " + kalimat.toLowerCase());
 console.log("Kalimat setelah diganti: " + kalimat.replace("menyenangkan", "seru"));
 console.log("Kalimat setelah di-split: " + kalimat.split(" ").join(", "));
-console.log("Kalimat setelah di-split: 2 " + kalimat.split(",").join("test"));
+console.log("Kalimat setelah di-split: " + kalimat.split(",").join(""));
 console.log("Apakah kalimat mengandung 'JavaScript'? " + kalimat.includes("JavaScript"));
 console.log("Apakah kalimat mengandung 'Python'? " + kalimat.includes("Python"));
 console.log("Index of 'JavaScript': " + kalimat.indexOf("JavaScript"));
