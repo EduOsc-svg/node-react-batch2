@@ -70,3 +70,9 @@ switch (buttonPushed) {
     default:
         console.log("tidak terjadi apa-apa");
 }
+
+console.log("\n===Pengkondisian Ternary Operator===\n");
+var nama = "Ahmad Sahroni ";
+var umur = 17;
+var statusKTP = (umur >= 17) ? "Boleh urus KTP" : "Belum boleh urus KTP";
+console.log(nama + statusKTP);
