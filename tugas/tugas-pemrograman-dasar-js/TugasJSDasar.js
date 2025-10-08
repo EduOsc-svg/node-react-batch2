@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 049405b (Upload All File)
 // Soal 1
 var perkenalan = 'Nama saya adalah';
 var nama = "Oscar Farassendra" // isi dengan nama kalian
@@ -134,6 +137,7 @@ console.log("Luas Persegi: " + luasPersegi);
 jariJari = parseFloat(jariJari);
 var luasLingkaran = Math.PI * jariJari * jariJari;
 console.log("Luas Lingkaran: " + luasLingkaran);
+<<<<<<< HEAD
 =======
 // Soal 1
 var perkenalan = 'Nama saya adalah';
@@ -271,3 +275,5 @@ jariJari = parseFloat(jariJari);
 var luasLingkaran = Math.PI * jariJari * jariJari;
 console.log("Luas Lingkaran: " + luasLingkaran);
 >>>>>>> 4190c8a7d0f441d048cd6edb8e11760259ffa861
+=======
+>>>>>>> 049405b (Upload All File)
