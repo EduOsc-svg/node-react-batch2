@@ -67,6 +67,6 @@ console.log("Substring (0, 7): " + kalimat.substring(0, 7));
 console.log("Substring (8): " + kalimat.substring(8));
 console.log("Karakter ke-5: " + kalimat.charAt(4));
 console.log("Karakter ke-10: " + kalimat.charAt(9));
-console.log("Karakter ke-15: " + kalimat.charAt(14));
+console.log("Karakterr ke-15: " + kalimat.charAt(14));
 
 
