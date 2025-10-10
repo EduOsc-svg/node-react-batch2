@@ -64,7 +64,7 @@ HanyaKonsonan = function(str) {
     var consonants = '';
     for (var i = 0; i < str.length; i++) {
         var char = str.charAt(i);
-        if (char.match(/[aiueo]/)) {
+        if (!char.match(/[aiueo ]/)) {
             consonants += char;
         }
     }

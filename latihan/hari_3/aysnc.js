@@ -40,3 +40,23 @@ PeriksaDokter(5, (error, message) => {
     console.log(message);
   }
 });
+
+
+// contoh async await
+async function PeriksaDokter(nomorAntrian) {
+  try {
+    const message = await new Promise((resolve, reject) => {
+      if (nomorAntrian === 5) {
+        setTimeout(() => {
+          resolve("Silakan masuk, nomor antrian Anda: " + nomorAntrian);
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        reject("Maaf, nomor antrian Anda sudah lewat.");
+      }, 2000);
+    }
+  });
+  } catch (error) {
+    console.log(error);
+  }
+}
