@@ -12,6 +12,8 @@ let movies = [
 const getmovies = (req, res) => {
   let table = "<h1>ini tampilan movies</h1><table><tr><th>ID</th><th>Title</th><th>Year</th></tr>";
   let id = req.query.id;
+  let title = req.query.title;
+  if (title === undefined) title = "";
   if (id) {
       const movie = movies.find(m => m.id === parseInt(id));
       if (movie) {
