@@ -61,7 +61,7 @@ function arrangeString (str) {
 console.log(arrangeString("bahasa")) // Output : aaabhs
 console.log(arrangeString("similikiti")) // Output : iiiiiklmst
 console.log(arrangeString("sanbercode")) // Output : abcdeenors
-
+console.log(arrangeString("")) // Output : ""
 console.log("\n" + "=".repeat(50) + "\n");
 
 // Soal 18
