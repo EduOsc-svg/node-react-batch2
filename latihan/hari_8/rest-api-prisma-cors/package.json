@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@prisma/client": "^6.17.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mysql2": "^3.15.2",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.17.1"
+  },
+  "name": "rest-api-prisma-cors",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": []
+}
