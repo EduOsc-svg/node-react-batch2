@@ -1,0 +1,58 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.logo {
+  /* height: 6em;
+  will-change: filter;
+  transition: filter 300ms; */
+  /* center logo horizontally */
+  display: block;
+  margin: 0 auto 1.5em;
+  width: 300px; /* fixed width for consistent layout */
+  height: auto;
+  padding: 8px;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.card {
+  width: 320px;
+  padding: 20px 20px 20px 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eee;
+  background: #fff;
+}
+.option {
+  text-align: left;
+  margin: 0.5em 0;
+}
+.read-the-docs {
+  color: #888;
+}
+
+.title{
+  text-align:left;
+  font-weight:600;
+  letter-spacing:1px;
+  margin:0 0 6px 0;
+  color:#999;
+}
+.subtitle{
+  text-align:left;
+  font-size:0.85rem;
+  
+  margin:0 0 10px 0;
+}
+hr{border:none;border-top:1px solid #000000;margin:10px 0 14px}
+.list{margin-bottom:14px}
+.option{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #f1f1f1}
+.option:first-of-type{border-top:0;padding-top:0}
+.send{width:100%;padding:10px;background:#38a6ff;color:white;border:none;border-radius:2px;font-weight:700}
+.send{transition:background-color 160ms ease}
+.send:hover{background:#ff0000}

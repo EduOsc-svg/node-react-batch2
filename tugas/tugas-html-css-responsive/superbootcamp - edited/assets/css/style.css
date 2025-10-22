@@ -1,0 +1,264 @@
+/* ======================== */
+/* 1. RESET DAN FONT DASAR  */
+/* ======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif; /* Ganti dengan font yang lebih sesuai jika ada */
+    background-color: #ffffff; /* Latar belakang putih */
+    color: #333; /* Warna teks standar */
+}
+
+/* Add top padding so content doesn't sit behind fixed header */
+main { padding-top: 80px; }
+
+/* Menghapus bullet list dan dekorasi link */
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ======================== */
+/* 2. LAYOUT UTAMA (HEADER) */
+/* ======================== */
+.container {
+    margin: 0 auto; /* Tengah-kan container */
+    padding: 0 20px; /* Padding kiri dan kanan */
+    max-width: 1200px; /* Lebar maksimum container */
+}
+
+header, .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* center header content */
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 50;
+    position: relative; /* allow absolute positioning of brand */
+}
+
+/* Brand/logo */
+.brand {
+    position: absolute;
+    left: 20px;
+}
+
+.brand img {
+    width: 140px;
+    height: auto;
+    display: block;
+}
+
+/* Navigation */
+.main-nav {
+    display: block;
+    position: absolute; /* position nav so it's centered above content */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 48px; /* increase spacing to match screenshot */
+    align-items: center;
+}
+
+.main-nav ul li a {
+    color: #555;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 5px 0;
+    transition: color 0.25s ease;
+}
+
+.main-nav ul li a:hover {
+    color: #000;
+}
+
+/* Nav toggle (hamburger) for small screens */
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+/* ======================== */
+/* 3. BAGIAN HERO (MAIN CONTENT) */
+/* ======================== */
+.main {
+    padding: 50px 0;
+}
+
+/* Kontainer utama hero untuk Flexbox */
+.container_hero {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: row-reverse; /* Pisahkan headline dan gambar */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bagian Headline Kiri */
+.container_hero-headline {
+    flex-basis: 50%; /* Ambil setengah lebar */
+    line-height: 1.2;
+    padding-right: 50px;
+}
+
+.container_hero-headline h1 {
+    font-size: 2rem; /* Ukuran font besar */;
+    line-height: 1.2;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.container_hero-headline small {
+    display: block;
+    margin-top: 30px;
+    font-size: 1rem;
+    color: #777;
+}
+
+/* Social Media Icons */
+.container_hero-headline ul {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.container_hero-headline ul li a {
+    font-size: 1.5rem; /* Ukuran ikon */
+    color: #333;
+}
+
+/* Bagian Gambar Kanan */
+.container_hero-image {
+    text-align: right;
+}
+
+.container_hero-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ======================== */
+/* 4. FOOTER (Jika Anda mau) */
+/* ======================== */
+
+/* Footer - single definition */
+.footer {
+    text-align: left; /* Default left, can be centered if placed outside .container */
+    padding: 20px 20px;
+    margin-top: 50px;
+    font-size: 0.8rem;
+    color: #999;
+    border-top: 1px solid #eee;
+}
+
+/* Helper/container describe section - unified */
+.container_describe {
+    display: flex;
+    align-items: center; /* Vertically center both columns */
+    justify-content: space-between;
+    padding: 50px 0; /* Padding atas dan bawah */
+    /* make this row full-bleed so the left square touches the viewport edge */
+    width: calc(100% + 40px);
+    margin-left: -20px;
+}
+
+.container_describe-animation {
+    /* Make this container appear larger and more left-aligned like screenshot */
+    flex: 0 0 50%;
+    width:600px;
+    height: 500px;
+    background-color: #223236; /* Warna latar yang cocok dengan screenshot */
+    padding: 0; /* no inner padding so icon centers nicely */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container_describe-animation i {
+    /* Scale icon responsively but keep it proportional to the square */
+    font-size: clamp(3.5rem, 12vw, 8rem);
+    color: #ffffff; /* Warna ikon putih */
+}
+
+.container_describe-info {
+    flex: 0 0 40%; /* Lebar kolom kanan yang tetap */
+    display: flex;
+    align-items: center; /* Center card vertically */
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.container_describe-info__card {
+    border: 6px solid #223236; /* Border tebal dan warna matching */
+    padding: 50px 50px; /* Padding internal di dalam kotak teks */
+    max-width: 560px;
+    background: #fff;
+}
+
+.container_describe-info__card p {
+    line-height: 1.6;
+    color: #555;
+    margin: 10px 0;
+}
+
+/* Responsive: stack columns on narrower screens */
+@media (max-width: 900px) {
+    .container_hero { flex-direction: column; }
+    .container_describe { flex-direction: column; gap: 30px; }
+    /* On small screens keep the square but make it full-width */
+    .container_describe-animation { flex: 0 0 100%; max-width: none; aspect-ratio: 1 / 1; padding: 0; }
+    .container_describe-info { flex: 1 1 100%; }
+    .container_describe-info__card { max-width: 100%; }
+    /* Responsive header: show toggle and hide nav by default */
+    .nav-toggle { display: block; }
+    .main-nav { display: none; }
+    .main-nav.open { display: block; }
+    .main-nav ul { flex-direction: column; gap: 12px; padding: 10px 0; }
+    .brand { flex: 1 1 auto; }
+}
+
+/* ======================== */
+/* 1. MODIFIKASI LOGO (HEADER) */
+/* ======================== */
+
+/* Pastikan Anda sudah memberikan class pada elemen logo atau menargetkan img/teks */
+/* Asumsi logo adalah gambar/teks di dalam header */
+
+/* PENTING: Tambahkan class 'logo' pada tag img atau text 'Portofolio' */
+.logo { 
+    display: inline-block; /* Penting untuk mengaktifkan transform pada elemen inline */
+    /* Transform awal: tidak diputar */
+    transform: rotate(0deg); 
+    /* Tambahkan animasi */
+    animation: rotateLogo 4s infinite linear; /* Nama animasi, durasi, perulangan, tipe */
+}
+
+@keyframes rotateLogo {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(10deg); /* Transform yang diminta: 10deg */
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}

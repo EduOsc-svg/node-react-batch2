@@ -1,15 +1,15 @@
 const e = require('express')
-const { readMoviesByID } = require('../../../../hari_6/rest-api-mysql/src/controllers/movieController')
 const { PrismaClient: prismaClient } = require('../../generated/prisma')
 
 exports.createMovie = async (req, res) => {
-    let {title,year} = req.body
+    let {title,year,categoryId} = req.body
 
     try {
         const movie = await new prismaClient().movies.create({
             data: {
                 title,
                 year,
+                categoryId
             },
         })
 
