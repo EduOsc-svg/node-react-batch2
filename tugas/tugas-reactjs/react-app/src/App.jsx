@@ -62,8 +62,10 @@ function App() {
     }
   }, [countdown])
 
+  
   return (
     // Card should always render; timer and countdown are conditional
+
     (
       <>
         {countdown > 0 && (
