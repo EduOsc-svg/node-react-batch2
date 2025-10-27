@@ -1,16 +1,15 @@
 
 import './App.css'
-import Home from './pages/Home'
-import CRUDaxios from './pages/CRUDaxios';
+import CRUDaxios from './pages/CRUDaxios.jsx';
 import './CRUDaxios.css';
-function App() {
+import './App.css'
+import MainRoutes from './routes/mainRoutes.jsx';
 
+export default function App() {
   return (
-    <>
-      <Home name="React Axios" color="blue" />
-      <CRUDaxios />
-    </>
-  )
+    <div>
+      {/* <CRUDaxios /> */}
+      <MainRoutes />
+    </div>
+  );
 }
-
-export default App

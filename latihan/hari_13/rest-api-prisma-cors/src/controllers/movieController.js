@@ -2,22 +2,31 @@ const e = require('express')
 const { PrismaClient: prismaClient } = require('../../generated/prisma')
 
 exports.createMovie = async (req, res) => {
-    let {title,year,categoryId} = req.body
+    let { title, year, categoryId } = req.body
+
+    // coerce numeric fields
+    year = year !== undefined ? parseInt(year) : undefined
+    categoryId = categoryId !== undefined ? parseInt(categoryId) : undefined
+
+    // basic validation
+    if (!title || isNaN(year) || isNaN(categoryId)) {
+        return res.status(400).json({ message: 'Invalid input: title, year and categoryId are required', status: 'error' })
+    }
 
     try {
         const movie = await new prismaClient().movies.create({
             data: {
                 title,
                 year,
-                categoryId
+                categoryId,
             },
         })
 
-        res.json({
-        data: movie,
-        message: 'Movie Was Successfully Created',
-        status: 'success'
-      })
+        res.status(201).json({
+            data: movie,
+            message: 'Movie Was Successfully Created',
+            status: 'success'
+        })
     } catch (error) {
         console.error('Error creating movie:', error)
         res.status(500).json({
@@ -77,29 +86,38 @@ exports.createMovie = async (req, res) => {
     }
 
     exports.updateMovie = async (req, res) => {
-        let {id} = req.params
-        let {title, year} = req.body
+        let { id } = req.params
+        let { title, year, categoryId } = req.body
         id = parseInt(id)
+
+        // coerce and validate
+        year = year !== undefined ? parseInt(year) : undefined
+        categoryId = categoryId !== undefined ? parseInt(categoryId) : undefined
+
+        if (!title || isNaN(year) || isNaN(categoryId)) {
+            return res.status(400).json({ message: 'Invalid input: title, year and categoryId are required', status: 'error' })
+        }
+
         try {
             const movie = await new prismaClient().movies.update({
                 where: { id },
-                data: { title, year }
-            }) 
+                data: { title, year, categoryId },
+            })
             res.json({
-            data: movie,
-            message: 'Movie Was Successfully Updated',
-            status: 'success'
-        })
+                data: movie,
+                message: 'Movie Was Successfully Updated',
+                status: 'success',
+            })
 
         } catch (error) {
             console.error('Error updating movie:', error)
             res.status(500).json({
                 message: 'Failed to update movie',
-                status: 'error'
+                status: 'error',
             })
             return
         }
-       
+
     }
 
     exports.deleteMovie = async (req, res) => {
