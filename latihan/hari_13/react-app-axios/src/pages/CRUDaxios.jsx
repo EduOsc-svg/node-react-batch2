@@ -72,7 +72,7 @@ function CRUDaxios() {
     };
 
     const handleCloseEdit = () => {
-        setEditingItem(null);
+        setEditingItem(null);4
         setEditTitle('');
         setEditYear('');
         setEditCategory('');
@@ -123,19 +123,6 @@ function CRUDaxios() {
         }
     };
 
-        const handleRefresh = async () => {
-            await fetchAll();
-        };
-
-        const handleFocusTitle = () => {
-            const el = document.getElementById('title');
-            if (el) el.focus();
-        };
-
-        const handleHelp = () => {
-            // open a help page or docs in a new tab; replace with your docs url
-            window.open('https://daisyui.com/components/dock/', '_blank');
-        };
 
     return (
         <div className="p-6 max-w-6xl mx-auto">
@@ -180,7 +167,7 @@ function CRUDaxios() {
 
                         <div className="md:col-span-3">
                             <div className="flex gap-2 justify-end">
-                                <button type="submit" className={`btn btn-primary ${loading ? 'btn-disabled' : ''}`} disabled={loading}>
+                                <button type="submit" style={{ color: 'black', backgroundColor: 'white' }} className={`btn btn-primary ${loading ? 'btn-disabled' : ''}`} disabled={loading}>
                                     {loading ? 'Saving...' : 'Submit'}
                                 </button>
                             </div>
@@ -193,7 +180,7 @@ function CRUDaxios() {
                 <table className="table table-zebra w-full">
                     <thead>
                         <tr>
-                            <th>id</th>
+                            
                             <th>nomor</th>
                             <th>title</th>
                             <th>year</th>
@@ -205,7 +192,7 @@ function CRUDaxios() {
                     <tbody>
                         {movies.map((item) => (
                             <tr key={item.id}>
-                                <td>{item.id}</td>
+                               
                                 <td>{movies.indexOf(item) + 1}</td>
                                 <td>{item.title}</td>
                                 <td>{item.year}</td>
@@ -258,26 +245,7 @@ function CRUDaxios() {
                     </div>
                 </div>
             )}
-                    {/* Dock (extra small) - bottom-right */}
-                    <div className="fixed bottom-6 right-6 z-50">
-                        <div className="dock">
-                            <div className="tooltip tooltip-left" data-tip="Add (focus title)">
-                                <button className="btn btn-primary btn-xs btn-circle dock-item" onClick={handleFocusTitle} aria-label="Add">
-                                    +
-                                </button>
-                            </div>
-                            <div className="tooltip tooltip-left" data-tip="Refresh">
-                                <button className="btn btn-ghost btn-xs btn-circle dock-item" onClick={handleRefresh} aria-label="Refresh">
-                                    ⟳
-                                </button>
-                            </div>
-                            <div className="tooltip tooltip-left" data-tip="Help">
-                                <button className="btn btn-info btn-xs btn-circle dock-item" onClick={handleHelp} aria-label="Help">
-                                    ?
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    
         </div>
     );
 }
