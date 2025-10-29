@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../src/generated"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ======================================
+// 1. MODEL KATEGORI (Tabel Rujukan)
+// ======================================
+model Category {
+  id       Int      @id @default(autoincrement())
+  name     String   @db.VarChar(100)
+  products Product[] // Relasi balik ke model Product
+
+  @@map("categories") // Nama tabel di database
+}
+
+
+// ======================================
+// 2. MODEL PRODUK (Tabel Utama)
+// ======================================
+model Product {
+  id             Int       @id @default(autoincrement())
+  sku            String    @unique @db.VarChar(50) // Stock Keeping Unit
+  name           String    @db.VarChar(255)
+  slug           String    @unique @db.VarChar(255) // URL friendly name
+  description    String?   @db.Text
+  price          Decimal   @db.Decimal(10, 2)
+  stockQuantity  Int       @default(0) @map("stock_quantity")
+  imageUrl       String?   @map("image_url") @db.VarChar(255)
+  isActive       Boolean   @default(true) @map("is_active")
+  
+  // Foreign Key dan Relasi
+  categoryId     Int?      @map("category_id")
+  category       Category? @relation(fields: [categoryId], references: [id])
+
+  // Timestamps
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  // Opsional: Mendefinisikan nama tabel di database
+  @@map("products") 
+}
