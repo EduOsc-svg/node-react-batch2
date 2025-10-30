@@ -14,7 +14,7 @@ exports.createMahasiswa = (req, res) => {
     let queryText = `INSERT INTO nilai_mahasiswa (nama, mata_kuliah, nilai, indeks_nilai, created_at, updated_at) VALUES("${nama}", "${mata_kuliah}", ${nilai}, "${exports.nilaiIndex(nilai)}", now(), now())`
     connectionPool.query(queryText, (err, data) => {
         if(err){
-            console.log(err)
+            console.log(err);
             return;
         }
         res.json({'message': 'Mahasiswa Berhasil Ditambahkan', 'status': 'success'})
