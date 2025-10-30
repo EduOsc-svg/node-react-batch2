@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus Full-Stack: Katalog Interaktif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Harmoni Netral Hangat (Warm Neutral Harmony) -->
+    <!-- Application Structure Plan: SPA ini mengubah dokumen soal linear menjadi dasbor interaktif. Navigasi utama (Pendahuluan, Backend, Frontend, Tema, Kriteria) memandu pengguna. Bagian 'Struktur' (Backend/Frontend) menggunakan Tab dan Akordeon untuk mengelola kompleksitas informasi teknis. Bagian 'Penugasan Tema' adalah inti interaktivitas, mengubah tabel statis 16-baris menjadi grid dinamis dengan fungsi pencarian (search) dan filter kategori. Struktur ini dipilih untuk mempermudah navigasi, memecah informasi kompleks, dan memungkinkan eksplorasi data (tema) secara non-linear, yang jauh lebih superior daripada membaca dokumen statis. -->
+    <!-- Visualization & Content Choices: Laporan sumber (lembar_soal_fullstack.md) tidak mengandung data kuantitatif; laporan ini berisi instruksi teknis dan data kategorikal (tema). Oleh karena itu, visualisasi data seperti chart (Chart.js) tidak digunakan. Fokus dialihkan ke: 1. Arsitektur Informasi (Tab/Akordeon) untuk mengorganisir instruksi (Goal: Organize, Method: HTML/Tailwind + JS). 2. Grid Interaktif (Goal: Explore/Filter, Method: HTML/Tailwind + JS) untuk data 'Penugasan Tema', menggantikan tabel statis. 3. Blok Kode (Goal: Inform, Method: HTML <pre><code>) untuk 'Skema Prisma'. 4. Badge/Tag (Goal: Inform, Method: HTML/Tailwind) untuk 'Teknologi' dan 'API Endpoints'. Pilihan ini mendukung tujuan untuk membuat dokumen teknis lebih mudah dipahami dan dijelajahi. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-btn.active {
+            border-bottom-color: #c2410c; 
+            color: #c2410c;
+        }
+        .prisma-code {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.875rem;
+        }
+        .prisma-code .comment { color: #5c6370; }
+        .prisma-code .keyword { color: #c678dd; }
+        .prisma-code .model { color: #e5c07b; }
+        .prisma-code .type { color: #56b6c2; }
+        .prisma-code .directive { color: #d19a66; }
+        
+        .task-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .task-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header dan Navigasi -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-900">Studi Kasus Full-Stack</h1>
+            <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 md:mt-0">
+                <a href="#pendahuluan" class="nav-link text-gray-600 hover:text-orange-700 font-medium">Pendahuluan</a>
+                <a href="#struktur" class="nav-link text-gray-600 hover:text-orange-700 font-medium">Struktur Pengerjaan</a>
+                <a href="#penugasan" class="nav-link text-gray-600 hover:text-orange-700 font-medium">Penugasan Tema</a>
+                <a href="#kriteria" class="nav-link text-gray-600 hover:text-orange-700 font-medium">Kriteria Penilaian</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-6 md:p-10">
+
+        <!-- Bagian 1: Pendahuluan -->
+        <section id="pendahuluan" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-orange-800 mb-6">Pendahuluan</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Konteks Proyek</h3>
+                    <p class="text-gray-700 mb-4">
+                        Anda adalah satu dari 16 developer full-stack yang ditugaskan untuk membuat aplikasi "Katalog Interaktif" mini secara individual. Setiap developer akan mendapatkan satu tema unik dari daftar yang disediakan.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Tujuan Proyek</h3>
+                    <p class="text-gray-700 mb-4">
+                        Membangun aplikasi web full-stack yang berfungsi penuh, menampilkan katalog produk sesuai dengan tema yang ditugaskan. Aplikasi harus memiliki fitur frontend (React) dan backend (Node.js) untuk mengelola data, termasuk fungsi CRUD.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h3 class="text-xl font-semibold mb-4 text-gray-900">Teknologi Inti (Wajib)</h3>
+                <div class="flex flex-wrap gap-3">
+                    <span class="bg-orange-100 text-orange-800 text-sm font-medium px-4 py-2 rounded-full">Node.js</span>
+                    <span class="bg-orange-100 text-orange-800 text-sm font-medium px-4 py-2 rounded-full">Express.js</span>
+                    <span class="bg-green-100 text-green-800 text-sm font-medium px-4 py-2 rounded-full">Prisma</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full">React</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full">React Context API</span>
+                    <span class="bg-yellow-100 text-yellow-800 text-sm font-medium px-4 py-2 rounded-full">Axios</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian 2: Struktur Pengerjaan -->
+        <section id="struktur" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-orange-800 mb-6">Struktur Pengerjaan</h2>
+            <p class="text-lg text-gray-700 mb-8">Setiap developer harus mengimplementasikan struktur berikut untuk aplikasi mereka. Gunakan tab di bawah untuk beralih antara spesifikasi Backend dan Frontend.</p>
+            
+            <div class="w-full">
+                <!-- Tab Headers -->
+                <div class="flex border-b border-gray-300 mb-6">
+                    <button class="tab-btn active text-lg font-semibold py-3 px-6 border-b-2 border-transparent hover:border-gray-400" onclick="showTab('backend')">
+                        Bagian A: Backend (Node.js)
+                    </button>
+                    <button class="tab-btn text-lg font-semibold py-3 px-6 border-b-2 border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-400" onclick="showTab('frontend')">
+                        Bagian B: Frontend (React)
+                    </button>
+                </div>
+
+                <!-- Tab Content: Backend -->
+                <div id="backend-content" class="tab-content active space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-3">1. Inisiasi Proyek & Server</h4>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Siapkan server Express dasar.</li>
+                            <li>Aktifkan CORS dan `express.json()`.</li>
+                            <li>Siapkan file `.env` untuk variabel lingkungan (misal: `DATABASE_URL`, `PORT`).</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-3">2. Skema Database (Prisma)</h4>
+                        <p class="text-gray-700 mb-4">Desain `schema.prisma` dengan model `Product` dan `Category`. Jalankan migrasi.</p>
+                        <p class="text-sm font-medium text-gray-600 mb-2">Contoh Skema Minimal:</p>
+                        <pre class="prisma-code"><code><span class="comment">// schema.prisma</span>
+<span class="keyword">model</span> <span class="model">Category</span> {
+  <span class="type">id</span>        Int       @id @default(autoincrement())
+  <span class="type">name</span>      String    @unique
+  <span class="type">products</span>  Product[]
+}
+
+<span class="keyword">model</span> <span class="model">Product</span> {
+  <span class="type">id</span>          Int       @id @default(autoincrement())
+  <span class="type">name</span>        String
+  <span class="type">price</span>       Int
+  <span class="type">description</span> String?
+  <span class="type">imageUrl</span>    String?
+  <span class="type">category</span>    Category  @relation(fields: [categoryId], references: [id])
+  <span class="type">categoryId</span>  Int
+}
+
+<span class="comment">// Opsional untuk fitur Cart/Order</span>
+<span class="keyword">model</span> <span class="model">Order</span> {
+  <span class="type">id</span>           Int       @id @default(autoincrement())
+  <span class="type">customerName</span> String
+  <span class="type">totalPrice</span>   Int
+  <span class="type">items</span>        OrderItem[]
+}
+
+<span class="keyword">model</span> <span class="model">OrderItem</span> {
+  <span class="type">id</span>        Int     @id @default(autoincrement())
+  <span class="type">order</span>     Order   @relation(fields: [orderId], references: [id])
+  <span class="type">orderId</span>   Int
+  <span class="type">productId</span> Int     
+  <span class="type">quantity</span>  Int
+  <span class="type">price</span>     Int     
+}
+</code></pre>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-3">3. Implementasi API (CRUD)</h4>
+                        <p class="text-gray-700 mb-4">Buat RESTful API untuk mengelola produk (dan opsional Kategori).</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="font-mono text-xs font-semibold bg-green-100 text-green-800 px-3 py-1 rounded-full">POST /api/products</span>
+                            <span class="font-mono text-xs font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">GET /api/products</span>
+                            <span class="font-mono text-xs font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">GET /api/products/:id</span>
+                            <span class="font-mono text-xs font-semibold bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">PUT /api/products/:id</span>
+                            <span class="font-mono text-xs font-semibold bg-red-100 text-red-800 px-3 py-1 rounded-full">DELETE /api/products/:id</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-3">4. Implementasi API (Cart/Order)</h4>
+                        <p class="text-gray-700 mb-4">Menerima array item dari cart dan menyimpannya sebagai `Order` baru.</p>
+                        <span class="font-mono text-xs font-semibold bg-green-100 text-green-800 px-3 py-1 rounded-full">POST /api/checkout</span>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Frontend -->
+                <div id="frontend-content" class="tab-content space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-3">1. Struktur Halaman (Routing)</h4>
+                        <p class="text-gray-700 mb-4">Gunakan `react-router-dom` untuk navigasi halaman.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="font-mono text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded">/</span>
+                            <span class="font-mono text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded">/cart</span>
+                            <span class="font-mono text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded">/admin</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-3">2. Katalog Interaktif (Homepage)</h4>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>*Fetch* data dari `GET /api/products`.</li>
+                            <li>Tampilkan semua produk dalam bentuk *card*.</li>
+                            <li>Sediakan tombol "Tambah ke Keranjang" di setiap *card*.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-3">3. Fungsi Keranjang (Cart)</h4>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Gunakan **Context API** untuk mengelola *state* keranjang (`cartItems`).</li>
+                            <li>Halaman `/cart` menampilkan semua item, jumlah, dan total harga.</li>
+                            <li>Implementasikan fungsi tambah/kurang/hapus item.</li>
+                            <li>Buat tombol "Checkout" yang mengirim data ke `POST /api/checkout`.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-3">4. Fungsi CRUD (Halaman Admin)</h4>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Buat halaman `/admin` (tidak perlu *login* untuk studi kasus ini).</li>
+                            <li>Sediakan **Formulir** untuk **Create** dan **Update** produk.</li>
+                            <li>Tampilkan **Tabel** semua produk dengan tombol **Edit** dan **Delete**.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Bagian 3: Penugasan Tema -->
+        <section id="penugasan" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-orange-800 mb-6">Penugasan Tema (16 Developer)</h2>
+            <p class="text-lg text-gray-700 mb-6">Setiap developer harus mengadaptasi soal di atas agar sesuai dengan tema (domain bisnis) yang ditugaskan. Gunakan filter atau pencarian di bawah untuk menjelajahi 16 tugas.</p>
+
+            <!-- Kontrol Filter -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-8 sticky top-20 z-40">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-grow">
+                        <label for="search-box" class="block text-sm font-medium text-gray-700 mb-1">Cari Tema</label>
+                        <input type="text" id="search-box" onkeyup="filterTasks()" placeholder="Cari berdasarkan nama tema (mis: Es Teh, Kebab, Flanel)..." class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                    </div>
+                    <div class="flex-shrink-0">
+                        <label for="filter-category" class="block text-sm font-medium text-gray-700 mb-1">Filter Kategori</label>
+                        <select id="filter-category" onchange="filterTasks()" class="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white">
+                            <option value="semua">Semua Kategori</option>
+                            <option value="makanan">Makanan & Katering</option>
+                            <option value="jajanan">Jajanan</option>
+                            <option value="minuman">Minuman</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="ritel">Ritel & Pakaian</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Penugasan -->
+            <div id="task-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Kartu akan di-render oleh JavaScript -->
+            </div>
+        </section>
+
+        <!-- Bagian 4: Kriteria Penilaian -->
+        <section id="kriteria" class="scroll-mt-24">
+            <h2 class="text-3xl font-bold text-orange-800 mb-6">Kriteria Penilaian</h2>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <ul class="list-disc list-inside text-gray-700 space-y-3 text-lg">
+                    <li>
+                        <span class="font-semibold text-gray-900">Kelengkapan Fungsionalitas Backend:</span>
+                        Server, Skema, API CRUD, dan API Checkout berfungsi sesuai spesifikasi.
+                    </li>
+                    <li>
+                        <span class="font-semibold text-gray-900">Kelengkapan Fungsionalitas Frontend:</span>
+                        Routing, Tampilan Katalog, *State Cart*, dan Halaman Admin CRUD berfungsi sesuai spesifikasi.
+                    </li>
+                    <li>
+                        <span class="font-semibold text-gray-900">Kesesuaian Tema:</span>
+                        Implementasi dan data *dummy* relevan dengan tema yang ditugaskan.
+                    </li>
+                    <li>
+                        <span class="font-semibold text-gray-900">Kualitas Kode:</span>
+                        Kode bersih, terstruktur, dan mudah dibaca.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 mt-20 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Studi Kasus Full-Stack. Dibuat sebagai aplikasi interaktif.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data untuk 16 Tema
+        const allTasksData = [
+            { dev: 1, tema: "JAJANAN LISA BONETT 🔥", domain: "Jajanan / Makanan Ringan (Mis: Keripik, Kue Basah, Gorengan)", kategori: "jajanan" },
+            { dev: 2, tema: "KOFIDOZ", domain: "Kafe / Minuman (Mis: Kopi, Non-Kopi, Makanan Ringan)", kategori: "minuman" },
+            { dev: 3, tema: "ES TEH FAT & MHUN TLUR GLUNG 🔥", domain: "Minuman & Jajanan (Mis: Varian Es Teh, Telur Gulung)", kategori: "minuman" },
+            { dev: 4, tema: "MEME KITCHEN", domain: "Katering / Makanan (Mis: Nasi Kotak, Tumpeng Mini, Lauk)", kategori: "makanan" },
+            { dev: 5, tema: "CIRENG SUWIR MAKNYOS 🔥", domain: "Jajanan Spesifik (Mis: Cireng Original, Cireng Pedas, Cireng Keju)", kategori: "jajanan" },
+            { dev: 6, tema: "ES TEH KUNYAH FOOD & DRINK 🔥", domain: "Minuman (Mis: Teh dengan Topping, Minuman Boba, Jus)", kategori: "minuman" },
+            { dev: 7, tema: "LOAFFOOD ES JERUK", domain: "Minuman Spesifik (Mis: Es Jeruk Murni, Jeruk Peras Hangat)", kategori: "minuman" },
+            { dev: 8, tema: "KHANZ KEBAB & MEIROSE CAKE 😁", domain: "Makanan & Dessert (Mis: Kebab, Burger, Kue Potong, Roti)", kategori: "makanan" },
+            { dev: 9, tema: "UMAMI CATERING 🔥", domain: "Katering (Mis: Paket Harian, Paket Acara, Frozen Food)", kategori: "makanan" },
+            { dev: 10, tema: "ANNYEONGCHINGU & NASI BAKAR 🔥", domain: "Makanan (Mis: Makanan Korea, Varian Nasi Bakar)", kategori: "makanan" },
+            { dev: 11, tema: "POTATO & CRISPY CREPES", domain: "Jajanan / Street Food (Mis: Kentang Goreng, Crepes Manis, Crepes Asin)", kategori: "jajanan" },
+            { dev: 12, tema: "CACA TOYS & KACAMATA", domain: "Produk Ritel (Mis: Mainan Anak, Kacamata Fashion, Aksesoris)", kategori: "ritel" },
+            { dev: 13, tema: "D'CELUP SEMPOL AYAM 🔥", domain: "Jajanan Spesifik (Mis: Sempol Ayam, Sempol Ikan, Saus)", kategori: "jajanan" },
+            { dev: 14, tema: "ISLAND FLANEL 🔥", domain: "Pakaian / Fashion (Mis: Kemeja Flanel, Kaos, Celana)", kategori: "ritel" },
+            { dev: 15, tema: "BRIYANI BAROKAH & SWETRAWTS 🔥", domain: "Makanan & Dessert (Mis: Nasi Biryani, Kebab, Strawberry Dessert)", kategori: "makanan" },
+            { dev: 16, tema: "DESSERT CAKE RAKA", domain: "Dessert (Mis: Dessert Box, Kue Ulang Tahun, Cookies)", kategori: "dessert" }
+        ];
+
+        // Fungsi untuk render kartu tugas
+        function renderTaskCards(tasksToRender) {
+            const grid = document.getElementById('task-grid');
+            grid.innerHTML = ''; 
+            
+            if (tasksToRender.length === 0) {
+                grid.innerHTML = `<p class="text-gray-600 md:col-span-2 lg:col-span-3 text-center">Tidak ada tema yang cocok dengan kriteria pencarian Anda.</p>`;
+                return;
+            }
+
+            tasksToRender.forEach(task => {
+                const card = document.createElement('div');
+                card.className = `task-card bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col`;
+                card.setAttribute('data-kategori', task.kategori);
+                card.setAttribute('data-tema', task.tema.toLowerCase());
+
+                let categoryColor = 'bg-gray-100 text-gray-800';
+                if (task.kategori === 'makanan') categoryColor = 'bg-red-100 text-red-800';
+                else if (task.kategori === 'jajanan') categoryColor = 'bg-yellow-100 text-yellow-800';
+                else if (task.kategori === 'minuman') categoryColor = 'bg-blue-100 text-blue-800';
+                else if (task.kategori === 'dessert') categoryColor = 'bg-pink-100 text-pink-800';
+                else if (task.kategori === 'ritel') categoryColor = 'bg-purple-100 text-purple-800';
+
+                card.innerHTML = `
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-sm font-semibold ${categoryColor} px-3 py-1 rounded-full capitalize">${task.kategori}</span>
+                            <span class="text-2xl font-bold text-gray-400">#${task.dev}</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 mb-2">${task.tema}</h4>
+                        <p class="text-gray-600 text-sm">${task.domain}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Fungsi untuk filter tugas
+        function filterTasks() {
+            const searchText = document.getElementById('search-box').value.toLowerCase();
+            const category = document.getElementById('filter-category').value;
+
+            const filteredTasks = allTasksData.filter(task => {
+                const matchesCategory = (category === 'semua') || (task.kategori === category);
+                const matchesSearch = task.tema.toLowerCase().includes(searchText) || task.domain.toLowerCase().includes(searchText);
+                return matchesCategory && matchesSearch;
+            });
+
+            renderTaskCards(filteredTasks);
+        }
+
+        // Fungsi untuk ganti tab
+        function showTab(tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById(`${tabName}-content`).classList.add('active');
+            document.querySelector(`.tab-btn[onclick="showTab('${tabName}')"]`).classList.add('active');
+        }
+
+        // Fungsi untuk navigasi smooth scroll
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Inisialisasi saat DOM dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTaskCards(allTasksData);
+            setupSmoothScroll();
+        });
+
+    </script>
+</body>
+</html>
