@@ -4,14 +4,16 @@ function PeriksaDokter(nomorAntrian) {
     if (nomorAntrian === 5) {
       setTimeout(() => {
         resolve("Silakan masuk, nomor antrian Anda: " + nomorAntrian);
-      }, 2000);
+      }, 2000); // simulate delay of 2 seconds
     } else {
       setTimeout(() => {
         reject("Maaf, nomor antrian Anda sudah lewat.");
-      }, 2000);
+      }, 2000); // simulate delay of 2 seconds
     }
   });
 }
+
+
 
 PeriksaDokter(5)
   .then((message) => {

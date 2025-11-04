@@ -15,7 +15,7 @@ function filterCarsPromise(color, year){
     if (filteredCars.length > 0) {
         resolve(filteredCars);
       } else {
-        var reason= new Error("Maaf Data tidak di temukan")
+        console.log("Maaf Data tidak di temukan");
         reject(reason);
       }
   });

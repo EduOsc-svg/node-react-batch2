@@ -1,4 +1,5 @@
 // di callback.js
+// all function here
 function readBooks(time, book, callback ) {
     console.log("saya membaca " + book.name )
     setTimeout(function(){
@@ -13,5 +14,5 @@ function readBooks(time, book, callback ) {
         }   
     }, book.timeSpent)
 }
- 
+
 module.exports = readBooks
